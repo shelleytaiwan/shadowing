@@ -3,54 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>短文跟讀</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+<title>「時代華語」短文跟讀</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;800&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#F5EDD8;min-height:100vh;font-family:'Noto Sans TC',sans-serif;padding:20px}
-h1{text-align:center;font-size:22px;color:#2C2520;margin-bottom:20px;font-weight:900;letter-spacing:1px}
-:root{--paper:#FBF4E6;--ink:#2C2520;--ink-soft:#6B5E4F;--ktv:#F26B4E;--ktv-2:#FF9E5E;--teal:#1F8A8A;--teal-deep:#13615F;--line:#D9C9A8;--shadow:rgba(60,40,20,.18);}
-.sd-wrap{max-width:940px;margin:0 auto;padding:22px 18px 50px;width:100%}
-.sd-toc{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 24px -16px var(--shadow);margin-bottom:16px}
-.sd-toc button{font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;cursor:pointer;border:1.5px solid var(--line);border-radius:12px;padding:12px 6px;color:var(--teal-deep);background:#FFFDF6;transition:transform .08s,background .15s,color .15s}
-.sd-toc button:hover{background:#FFF1C9}
-.sd-toc button.active{background:linear-gradient(180deg,var(--ktv-2),var(--ktv));color:#fff;border-color:transparent;box-shadow:0 3px 0 #c84a30}
-.sd-toc button:active{transform:translateY(2px)}
-.sd-stage{background:linear-gradient(180deg,#fff,#FFFBF2);border:2px solid var(--line);border-radius:22px;padding:34px 30px;margin-bottom:16px;box-shadow:0 12px 26px -18px var(--shadow);min-height:180px}
-.sd-textc{font-family:'KaiTi','DFKai-SB','BiauKai','Noto Serif TC',serif;font-weight:700;font-size:40px;line-height:1.85;color:var(--ink);letter-spacing:1px}
-.sd-char-done{color:var(--ink-soft);opacity:0.5}
-.sd-char-cur{color:var(--ktv);border-bottom:3px solid var(--ktv);font-weight:900}
-.sd-char-next{color:var(--ink)}
-.sd-panel{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:16px;box-shadow:0 10px 24px -16px var(--shadow)}
-.sd-speed{display:flex;align-items:center;gap:14px}
-.sd-speed label{font-weight:800;color:var(--ink-soft);font-size:14px;white-space:nowrap}
-input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:8px;background:linear-gradient(90deg,var(--ktv),var(--ktv-2));cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:4px solid var(--ktv);box-shadow:0 2px 6px rgba(0,0,0,.25)}
-input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--ktv)}
-.sd-btns{display:flex;gap:12px;flex-wrap:wrap}
-button.sd-act{font-family:'Noto Sans TC',sans-serif;font-weight:800;font-size:17px;cursor:pointer;border:none;border-radius:12px;padding:13px 22px;color:#fff;transition:transform .08s;flex:1;min-width:130px}
-button.sd-act:active{transform:translateY(2px)}
-.sd-btn-go{background:linear-gradient(180deg,var(--ktv-2),var(--ktv));box-shadow:0 4px 0 #c84a30}
-.sd-btn-replay{background:linear-gradient(180deg,#36A6A6,var(--teal));box-shadow:0 4px 0 #0f5350}
-@media(max-width:640px){.sd-toc{grid-template-columns:repeat(4,1fr)}.sd-toc button{font-size:14px;padding:10px 4px}.sd-stage{padding:24px 18px}.sd-textc{font-size:30px;line-height:1.8}button.sd-act{font-size:16px}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1521;--surface:#1a2235;--surface2:#222d42;--border:#2d3d5a;
+  --gold:#f0b429;--text:#e8edf5;--text-mid:#8fa3c0;--text-muted:#4d6080;
+}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:400;min-height:100vh;overflow-x:hidden;font-size:18px}
+.site-header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.site-title{font-family:'Noto Serif TC',serif;font-size:20px;line-height:1.5;font-weight:700;color:var(--gold)}
+.site-by{font-size:14px;color:#c8d8f0;font-weight:500}
+#shadowing{display:flex;flex-direction:column;min-height:calc(100vh - 96px)}
+.game-header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.back-btn{background:none;border:none;color:var(--text-mid);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:all .15s}
+.back-btn:hover{color:var(--text);background:var(--surface2)}
+.game-title{font-size:24px;font-weight:500;flex:1;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.game-sub{font-size:15px;color:var(--text-mid);font-weight:400}
+/* ===== 短文跟讀 SHADOWING (scoped) ===== */
+#shadowing{--paper:#FBF4E6;--ink:#2C2520;--ink-soft:#6B5E4F;--ktv:#F26B4E;--ktv-2:#FF9E5E;--teal:#1F8A8A;--teal-deep:#13615F;--line:#D9C9A8;--shadow:rgba(60,40,20,.18);}
+#shadowing .sd-wrap{max-width:940px;margin:0 auto;padding:22px 18px 50px;width:100%}
+#shadowing .sd-toc{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 24px -16px var(--shadow);margin-bottom:16px}
+#shadowing .sd-toc button{font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;cursor:pointer;border:1.5px solid var(--line);border-radius:12px;padding:12px 6px;color:var(--teal-deep);background:#FFFDF6;transition:transform .08s,background .15s,color .15s}
+#shadowing .sd-toc button:hover{background:#FFF1C9}
+#shadowing .sd-toc button.active{background:linear-gradient(180deg,var(--ktv-2),var(--ktv));color:#fff;border-color:transparent;box-shadow:0 3px 0 #c84a30}
+#shadowing .sd-toc button:active{transform:translateY(2px)}
+#shadowing .sd-stage{background:linear-gradient(180deg,#fff,#FFFBF2);border:2px solid var(--line);border-radius:22px;padding:34px 30px;margin-bottom:16px;box-shadow:0 12px 26px -18px var(--shadow);min-height:180px}
+#shadowing .sd-textc{font-family:'KaiTi','DFKai-SB','BiauKai','Noto Serif TC',serif;font-weight:700;font-size:40px;line-height:1.85;color:var(--ink);letter-spacing:1px}
+#shadowing .sd-char-done{color:var(--ink-soft);opacity:0.5}
+#shadowing .sd-char-cur{color:var(--ktv);border-bottom:3px solid var(--ktv);font-weight:900}
+#shadowing .sd-char-next{color:var(--ink)}
+#shadowing .sd-panel{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:16px;box-shadow:0 10px 24px -16px var(--shadow)}
+#shadowing .sd-speed{display:flex;align-items:center;gap:14px}
+#shadowing .sd-speed label{font-weight:800;color:var(--ink-soft);font-size:14px;white-space:nowrap}
+#shadowing input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:8px;background:linear-gradient(90deg,var(--ktv),var(--ktv-2));cursor:pointer}
+#shadowing input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:4px solid var(--ktv);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+#shadowing input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--ktv)}
+#shadowing .sd-btns{display:flex;gap:12px;flex-wrap:wrap}
+#shadowing button.sd-act{font-family:'Noto Sans TC',sans-serif;font-weight:800;font-size:17px;cursor:pointer;border:none;border-radius:12px;padding:13px 22px;color:#fff;transition:transform .08s;flex:1;min-width:130px}
+#shadowing button.sd-act:active{transform:translateY(2px)}
+#shadowing .sd-btn-go{background:linear-gradient(180deg,var(--ktv-2),var(--ktv));box-shadow:0 4px 0 #c84a30}
+#shadowing .sd-btn-replay{background:linear-gradient(180deg,#36A6A6,var(--teal));box-shadow:0 4px 0 #0f5350}
+@media(max-width:640px){#shadowing .sd-toc{grid-template-columns:repeat(4,1fr)}#shadowing .sd-toc button{font-size:14px;padding:10px 4px}#shadowing .sd-stage{padding:24px 18px}#shadowing .sd-textc{font-size:30px;line-height:1.8}#shadowing button.sd-act{font-size:16px}}
+/* ===== 放大版（約 iPad 畫面 80–90%）===== */
+.site-title{font-size:clamp(26px,3.2vw,40px)}
+.site-by{font-size:clamp(17px,2vw,24px)}
+.back-btn{font-size:clamp(28px,3.2vw,40px)}
+.game-title{font-size:clamp(30px,3.6vw,46px)}
+.game-sub{font-size:clamp(18px,2.1vw,26px)}
+#shadowing .sd-wrap{max-width:1400px;width:92vw;padding:2.4vw 0 56px}
+#shadowing .sd-toc{gap:12px;padding:18px}
+#shadowing .sd-toc button{font-size:clamp(15px,2.3vw,30px);padding:16px 6px}
+#shadowing .sd-stage{padding:clamp(24px,3.4vw,48px)}
+#shadowing .sd-textc{font-size:clamp(36px,5.4vw,76px)}
+#shadowing .sd-speed label{font-size:clamp(20px,2.2vw,28px)}
+#shadowing button.sd-act{font-size:clamp(22px,2.7vw,34px);padding:18px 24px}
 </style>
 </head>
 <body>
-<h1>📖 短文跟讀</h1>
-<div class="sd-wrap">
-  <div class="sd-toc" id="sd-toc"></div>
-  <div class="sd-stage"><div class="sd-textc" id="sd-text"></div></div>
-  <div class="sd-panel">
-    <div class="sd-speed"><label>慢</label><input type="range" id="sd-speed" min="0.7" max="1.2" step="0.05" value="0.9"><label>快</label></div>
-    <div class="sd-btns">
-      <button class="sd-act sd-btn-go" id="sd-go">&#9654; 開始</button>
-      <button class="sd-act sd-btn-replay" id="sd-replay">&#8635; 再一次</button>
+
+<div class="site-header">
+  <div class="site-title">「時代華語」短文跟讀</div>
+  <div class="site-by">解麗琪老師 &amp; 張月珍老師　使用 AI 製作</div>
+</div>
+
+<div id="shadowing">
+  <div class="game-header">
+    <button class="back-btn" onclick="sdBack()" title="返回">&larr;</button>
+    <span class="game-title">&#128214; 短文跟讀<span class="game-sub">16 課・課文跟讀</span></span>
+  </div>
+  <div class="sd-wrap">
+    <div class="sd-toc" id="sd-toc"></div>
+    <div class="sd-stage"><div class="sd-textc" id="sd-text"></div></div>
+    <div class="sd-panel">
+      <div class="sd-speed"><label>慢</label><input type="range" id="sd-speed" min="0.7" max="1.2" step="0.05" value="0.9"><label>快</label></div>
+      <div class="sd-btns">
+        <button class="sd-act sd-btn-go" id="sd-go">&#9654; 開始</button>
+        <button class="sd-act sd-btn-replay" id="sd-replay">&#8635; 再一次</button>
+      </div>
     </div>
   </div>
+  <audio id="sd-player" preload="auto"></audio>
 </div>
-<audio id="sd-player" preload="auto"></audio>
-<script>
 
+<script>
+/* ===== 短文跟讀 SHADOWING ===== */
 const SD_TEXTS = [
   '大家好！我姓小林，叫友美，我是日本人。我喜歡臺灣，台灣朋友很可愛。我愛吃水果，愛喝珍珠奶茶。謝謝大家！',
   '友美是學生，十九歲。她早上六點三十分起床，七點去學校，八點四十分上課；中午十二點下課、吃午飯；下午一點去圖書館；四點回家做飯，晚上六點吃飯，十點睡覺。友美很忙！',
@@ -92,22 +130,10 @@ let sdTTSIdx    = 0;  // current char position for TTS karaoke
 
 function sdTTSSupported(){ return 'speechSynthesis' in window; }
 
-// 頁面一載入就先把語音清單快取起來（很多瀏覽器，尤其 Windows，
-// 第一次呼叫 getVoices() 時清單是空的，要等 voiceschanged 才有資料。
-// 如果不先快取好，使用者一進頁面就馬上按「開始」，會用瀏覽器的預設語音
-// （常常是英文引擎）去唸中文字，聽起來就會像亂念/亂碼）。
-let sdCachedVoices = [];
-function sdRefreshVoices(){ sdCachedVoices = speechSynthesis.getVoices() || []; }
-if(sdTTSSupported()){
-  sdRefreshVoices();
-  speechSynthesis.onvoiceschanged = sdRefreshVoices;
-}
-
-function sdGetTWMaleVoice(voices){
-  voices = (voices && voices.length) ? voices : speechSynthesis.getVoices();
-  // 註：HsiaoYu 在微軟/Edge 的語音裡其實是女聲，之前誤判為男聲已移除
+function sdGetTWMaleVoice(){
+  const voices = speechSynthesis.getVoices();
   // Priority: zh-TW male > zh-TW > zh male > zh
-  const twMale = voices.find(v => v.lang.startsWith('zh-TW') && /male|man|YunJhe|TomChen|Tom/i.test(v.name));
+  const twMale = voices.find(v => v.lang.startsWith('zh-TW') && /male|man|HsiaoYu|YunJhe|TomChen|Tom/i.test(v.name));
   if(twMale) return twMale;
   const tw = voices.find(v => v.lang.startsWith('zh-TW'));
   if(tw) return tw;
@@ -145,18 +171,13 @@ function sdTTSPlay(text, rateVal){
   utter.rate  = rateVal * 0.9;  // slight slow for clarity
   utter.pitch = 0.9;  // slightly lower = more masculine
 
-  // 用頁面載入時就快取好的語音清單來選聲音（同步、不用等 onvoiceschanged），
-  // 避免使用者一進頁面馬上按開始時，因為清單還沒載好而用錯語音。
-  const v = sdGetTWMaleVoice(sdCachedVoices);
-  if(!v){
-    // 這台裝置完全沒有中文語音：不要硬用英文引擎去亂唸中文字，
-    // 直接提示使用者，而不是讓學生聽到聽不懂的怪音。
-    sdSpeaking = false;
-    document.getElementById('sd-go').textContent = '▶ 開始';
-    alert('這台裝置目前偵測不到中文語音，暫時無法朗讀課文。\n建議改用 Chrome 瀏覽器，或確認系統已安裝中文語音。');
-    return;
+  // Try to set male voice
+  function trySetVoice(){
+    const v = sdGetTWMaleVoice();
+    if(v) utter.voice = v;
   }
-  utter.voice = v;
+  if(speechSynthesis.getVoices().length > 0){ trySetVoice(); }
+  else { speechSynthesis.onvoiceschanged = trySetVoice; }
 
   const totalChars = text.length;
   let startTime = null;
@@ -203,20 +224,15 @@ function sdTTSPlay(text, rateVal){
 
   sdUtterance = utter;
   speechSynthesis.speak(utter);
-  // Chrome 有個已知 bug：cancel() 之後太快呼叫 speak()，有機率整段被吃掉、
-  // 完全沒聲音卻也不觸發 onerror。這裡只在偵測到「該講但沒在講」時才補講一次。
-  setTimeout(() => {
-    if(sdSpeaking && sdUtterance === utter && !speechSynthesis.speaking){
-      speechSynthesis.speak(utter);
-    }
-  }, 200);
 }
 // ── End TTS section ────────────────────────────────────────────────
 
 const SD_CN = ["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六"];
 let sdIdx = 0;
 
+let sdInited = false;
 function sdInit(){
+  if (sdInited) return; sdInited = true;
   const toc = document.getElementById('sd-toc');
   SD_TEXTS.forEach((_, i) => {
     const b = document.createElement('button');
@@ -339,5 +355,13 @@ function sdSelect(i){
   }
 }
 
+function sdBack(){
+  const p = document.getElementById('sd-player');
+  if (p) p.pause();
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  if (history.length > 1) history.back(); else location.href = 'index.html';
+}
 sdInit();
 </script>
+</body>
+</html>
